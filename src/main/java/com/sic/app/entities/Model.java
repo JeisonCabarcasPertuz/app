@@ -19,5 +19,5 @@ public class Model {
     private Long id;
 
     @Column(name = "modelo_pc")
-    private String firstName;
+    private String modelPc;
 }
