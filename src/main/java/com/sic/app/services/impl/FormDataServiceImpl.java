@@ -1,5 +1,8 @@
 package com.sic.app.services.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.sic.app.entities.FormData;
@@ -26,5 +29,12 @@ public class FormDataServiceImpl implements FormDataService {
         FormData formData = formDataMapper.formDataRequestToFormData(formDataRequest);
         return formDataMapper.formDataToFormDataDTO(formDataRepository.save(formData));
     }
-    
+
+    @Override
+    public List<FormDataDTO> getRecords() {
+        List<FormData> listFormData = formDataRepository.findAll();
+         return listFormData.stream()
+                       .map(formData -> formDataMapper.formDataToFormDataDTO(formData))
+                       .collect(Collectors.toList()); 
+    }
 }

@@ -8,12 +8,14 @@ import com.sic.app.models.FormDataRequest;
 import com.sic.app.models.FormDataResponse;
 import com.sic.app.services.FormDataService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/form")
@@ -23,10 +25,17 @@ public class FormController {
     private FormDataService formDataService;
 
     @PostMapping("/create")
-    public ResponseEntity<FormDataResponse> createGrade(@RequestBody FormDataRequest dataRequest){
+    public ResponseEntity<FormDataResponse<FormDataDTO>> createGrade(@RequestBody FormDataRequest dataRequest) {
         FormDataDTO dataResponse = formDataService.createRecord(dataRequest);
-        FormDataResponse response = FormDataResponse.createSuccessResponse(dataResponse);
+        FormDataResponse<FormDataDTO> response = FormDataResponse.createSuccessResponse(dataResponse);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
+    @GetMapping("/history")
+    public ResponseEntity<FormDataResponse<List<FormDataDTO>>> getRecords() {
+        List<FormDataDTO> dataResponse = formDataService.getRecords();
+        FormDataResponse<List<FormDataDTO>> response = FormDataResponse.createSuccessResponseList(dataResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    } 
     
 }
