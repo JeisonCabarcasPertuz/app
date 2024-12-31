@@ -18,8 +18,8 @@ public class FormDataResponse<T> {
         return response;
     }
 
-    public static FormDataResponse<List<FormDataDTO>> createSuccessResponseList(List<FormDataDTO> data) {
-        FormDataResponse<List<FormDataDTO>> response = new FormDataResponse<>();
+    public static <T> FormDataResponse<List<T>> createSuccessResponseList(List<T> data) {
+        FormDataResponse<List<T>> response = new FormDataResponse<>();
         response.setStatus("OK");
         response.setMessage("Successfully retrieved multiple records");
         response.setData(data);
